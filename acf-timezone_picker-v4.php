@@ -2,7 +2,7 @@
 
 /* 
  * Edited by Will Rosenberg / Response Mktg
- * @TODO: Add option to output either the timezone name 'America/New_York' or the hours offset from GMT.
+ * See Readme in https://github.com/wnrosenberg/acf-timezone-picker/tree/develop
  */
 
 class acf_field_timezone_picker extends acf_field {

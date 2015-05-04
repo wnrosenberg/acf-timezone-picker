@@ -2,6 +2,16 @@
 
 A simple timezone picker for Advanced Custom Fields
 
+## Forked!
+
+Forked by Will Rosenberg / Response Mktg
+
+Functionality Added:
+* Added option for default timezone.
+
+Functionality Todo:
+* Add option to output either the timezone name 'America/New_York' or the hours offset from GMT (-5 or -4 depending on DST)
+
 -----------------------
 
 ### Description
