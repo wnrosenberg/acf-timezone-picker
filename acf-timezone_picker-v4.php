@@ -21,16 +21,13 @@ class acf_field_timezone_picker extends acf_field {
     *  @date	23/01/13
     */
 
-    function __construct()
-    {
+    function __construct() {
         // vars
         $this->name = 'timezone_picker';
         $this->label = __('Timezone');
         $this->category = __("Choice",'acf'); // Basic, Content, Choice, etc
         $this->defaults = array(
-            // add default here to merge into your field.
-            // This makes life easy when creating the field options as you don't need to use any if( isset('') ) logic. eg:
-            //'preview_size' => 'thumbnail'
+            // set defaults
             'default_timezone' => 'America/New_York',
         );
 
@@ -45,9 +42,19 @@ class acf_field_timezone_picker extends acf_field {
         );
     }
 
-    
-    function create_options( $field )
-    {
+    /*
+    *  create_options()
+    *
+    *  Create extra options for your field. This is rendered when editing a field.
+    *  The value of $field['name'] can be used (like below) to save extra data to the $field
+    *
+    *  @type    action
+    *  @since   3.6
+    *  @date    23/01/13
+    *
+    *  @param   $field  - an array holding all the field's data
+    */
+    function create_options($field) {
         // defaults?
         $field = array_merge($this->defaults, $field);
         
@@ -66,8 +73,10 @@ class acf_field_timezone_picker extends acf_field {
             </td>
             <td>
                 <?php
-                $timezones = self::get_timezone_options(); // get array of timezones for the select field.
+                // get array of timezones for the select field.
+                $timezones = self::get_timezone_options(); 
                 
+                // output the field.
                 do_action('acf/create_field', array(
                     'type'      =>  'select',
                     'name'      =>  'fields['.$key.'][default_timezone]',
@@ -80,14 +89,13 @@ class acf_field_timezone_picker extends acf_field {
             </td>
         </tr>
         <?php
-        
     }
 
 
     /*
     *  create_field()
     *
-    *  Create the HTML interface for your field
+    *  Create a select dropdown with all available timezones
     *
     *  @param	$field - an array holding all the field's data
     *
@@ -95,12 +103,7 @@ class acf_field_timezone_picker extends acf_field {
     *  @since	3.6
     *  @date	23/01/13
     */
-
-    function create_field( $field )
-    {
-        /*
-        *  Create a select dropdown with all available timezones
-        */
+    function create_field($field) {
         $utc = new DateTimeZone('UTC');
         $dt = new DateTime('now', $utc);
         ?>
@@ -113,9 +116,20 @@ class acf_field_timezone_picker extends acf_field {
     <?php
     }
 
-    // This function gets the list of timezones from PHP to be used in our plugin.
-    // When $output = options --> output array of html <option>s to be used in a <select> element.
-    // When $output != options --> output array of [tz_identifier] -> [tz_label].
+
+    /*
+    *  get_timezone_options()
+    *
+    *  This function gets the list of timezones from PHP to be used in our plugin.
+    *  If output == "options", outputs an array of <option>s, otherwise an array of zones/labels.
+    *
+    *  @type    internal
+    *  @since   3.6
+    *  @date    May 4, 2015
+    *
+    *  @param   $output - a string, "options" or something else
+    *  @param   $field  - an array holding all the field's data
+    */
     private function get_timezone_options($output = null, $field = null) {
         $output_options = false;
         if ($output == "options") {
